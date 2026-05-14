@@ -80,13 +80,13 @@ export function browserDownloadUrl(path: string): string {
 
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
 
-  if (typeof window !== "undefined") {
-    return `${window.location.origin}${normalizedPath}`;
-  }
-
   if (/^https?:\/\//i.test(RESOLVED_API_BASE_URL)) {
     const backendBaseUrl = RESOLVED_API_BASE_URL.replace(API_BASE_SUFFIX, "");
     return `${backendBaseUrl}${normalizedPath}`;
+  }
+
+  if (typeof window !== "undefined") {
+    return `${window.location.origin}${normalizedPath}`;
   }
 
   return normalizedPath;
