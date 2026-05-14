@@ -4,6 +4,11 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from rest_framework import authentication
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.authentication import SessionAuthentication
+
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+    def enforce_csrf(self, request):
+        return  # Bypass CSRF checks for API because cross-domain cookies cannot be read by JS
 
 from .models import Agent
 
