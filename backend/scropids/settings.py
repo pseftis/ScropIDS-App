@@ -80,6 +80,9 @@ else:
             "PASSWORD": os.getenv("POSTGRES_PASSWORD", "scropids"),
             "HOST": os.getenv("POSTGRES_HOST", "localhost"),
             "PORT": os.getenv("POSTGRES_PORT", "5432"),
+            "OPTIONS": {
+                "sslmode": "require",
+            },
         }
     }
 
