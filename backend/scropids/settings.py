@@ -143,8 +143,16 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = _as_bool(os.getenv("SECURE_HSTS_INCLUDE_SUBDOMA
 SECURE_HSTS_PRELOAD = _as_bool(os.getenv("SECURE_HSTS_PRELOAD", "False"))
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+if REDIS_URL.startswith("rediss://") and "ssl_cert_reqs" not in REDIS_URL:
+    REDIS_URL += "?ssl_cert_reqs=CERT_NONE"
+
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", REDIS_URL)
+if CELERY_BROKER_URL.startswith("rediss://") and "ssl_cert_reqs" not in CELERY_BROKER_URL:
+    CELERY_BROKER_URL += "?ssl_cert_reqs=CERT_NONE"
+
 CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://localhost:6379/1")
+if CELERY_RESULT_BACKEND.startswith("rediss://") and "ssl_cert_reqs" not in CELERY_RESULT_BACKEND:
+    CELERY_RESULT_BACKEND += "?ssl_cert_reqs=CERT_NONE"
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
