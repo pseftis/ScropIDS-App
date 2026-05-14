@@ -123,6 +123,18 @@ CORS_ALLOWED_ORIGINS = [
     if x.strip()
 ]
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "x-organization-slug",
+]
 CSRF_TRUSTED_ORIGINS = [
     x.strip()
     for x in os.getenv("CSRF_TRUSTED_ORIGINS", FRONTEND_ORIGIN).split(",")
