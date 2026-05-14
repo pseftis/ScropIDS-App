@@ -165,7 +165,18 @@ class SessionRegisterView(APIView):
 
     def post(self, request):
         serializer = SessionRegisterSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except ValidationError as exc:
+            # Format the errors into a single string for the frontend 'detail' toast
+            errors = []
+            for field, messages in exc.detail.items():
+                if isinstance(messages, list):
+                    errors.append(f"{field.capitalize()}: {' '.join(messages)}")
+                else:
+                    errors.append(f"{field.capitalize()}: {messages}")
+            return Response({"detail": " | ".join(errors)}, status=status.HTTP_400_BAD_REQUEST)
+        
         payload = serializer.validated_data
 
         User = get_user_model()
