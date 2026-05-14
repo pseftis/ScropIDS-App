@@ -19,11 +19,7 @@ export function LoginPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const isLocalhost =
-    typeof window !== "undefined" &&
-    (window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1" ||
-      window.location.hostname === "::1");
+
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -89,11 +85,7 @@ export function LoginPage() {
             </div>
           </div>
 
-          <div
-            className={`mb-4 grid gap-2 rounded-xl border border-border/80 bg-[#0a1222] p-1 ${
-              isLocalhost ? "grid-cols-3" : "grid-cols-2"
-            }`}
-          >
+          <div className="mb-4 grid gap-2 rounded-xl border border-border/80 bg-[#0a1222] p-1 grid-cols-3">
             <Button type="button" variant={mode === "login" ? "default" : "ghost"} onClick={() => setMode("login")}>
               Login
             </Button>
@@ -104,13 +96,11 @@ export function LoginPage() {
             >
               Register
             </Button>
-            {isLocalhost ? (
-              <Button asChild variant="ghost">
-                <a href={adminUrl("/admin/login/?next=/admin/")} target="_blank" rel="noreferrer">
-                  Admin
-                </a>
-              </Button>
-            ) : null}
+            <Button asChild variant="ghost">
+              <a href={adminUrl("/admin/login/?next=/admin/")} target="_blank" rel="noreferrer">
+                Admin
+              </a>
+            </Button>
           </div>
 
           {mode === "login" ? (
