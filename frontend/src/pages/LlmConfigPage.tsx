@@ -69,7 +69,7 @@ const providerProfiles: ProviderProfile[] = [
     pricing: "free_paid",
     provider_type: "openai_compatible",
     base_url: "https://openrouter.ai/api/v1",
-    model: "google/gemma-4-31b-it:free",
+    model: "meta-llama/llama-3.1-8b-instruct:free",
     note: "OpenAI-compatible multi-model router.",
     auth: "required",
   },

@@ -76,7 +76,6 @@ def _call_openai_compatible(provider: LLMProviderConfig, user_prompt: str) -> st
     payload = {
         "model": provider.model,
         "temperature": 0,
-        "response_format": {"type": "json_object"},
         "messages": [
             {"role": "system", "content": LLM_SYSTEM_PROMPT},
             {"role": "user", "content": user_prompt},

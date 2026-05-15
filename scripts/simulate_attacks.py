@@ -567,7 +567,10 @@ def main() -> int:
     target = f"level '{args.level}'" if args.level else f"scenario '{args.scenario}'"
     print(f"Done. Sent {total_events} total synthetic events for {target} ({flavor}).")
     print("If you are running only Django runserver, process pending events with:")
-    print('./backend/.venv/bin/python backend/manage.py shell -c "from apps.core.services.pipeline import run_scheduler_tick; print(run_scheduler_tick())"')
+    if sys.platform == "win32":
+        print('.\\backend\\.venv\\Scripts\\python.exe backend\\manage.py shell -c "from apps.core.services.pipeline import run_scheduler_tick; print(run_scheduler_tick())"')
+    else:
+        print('./backend/.venv/bin/python backend/manage.py shell -c "from apps.core.services.pipeline import run_scheduler_tick; print(run_scheduler_tick())"')
     return 0
 
 
