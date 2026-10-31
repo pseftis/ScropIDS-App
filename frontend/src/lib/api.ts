@@ -25,6 +25,8 @@ const RESOLVED_API_BASE_URL = resolveApiBaseUrl();
 
 export const api = axios.create({
   baseURL: RESOLVED_API_BASE_URL,
+  // Prevent the UI from waiting forever when the API server is unavailable.
+  timeout: 15000,
   withCredentials: true,
   xsrfCookieName: "csrftoken",
   xsrfHeaderName: "X-CSRFToken",
@@ -95,6 +97,9 @@ export function browserDownloadUrl(path: string): string {
 export function errorMessage(error: unknown): string {
   if (axios.isAxiosError(error)) {
     const axiosError = error as AxiosError<{ detail?: string }>;
+    if (axiosError.code === "ECONNABORTED") {
+      return "The server is taking too long to respond. Please check the backend and try again.";
+    }
     return axiosError.response?.data?.detail ?? axiosError.message;
   }
   return "Unexpected error.";
