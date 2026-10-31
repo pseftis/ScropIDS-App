@@ -25,7 +25,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshMe = async () => {
     try {
-      const response = await api.get<AuthMe>("/auth/me/");
+      // Use a shorter timeout for the initial session check so the login page
+      // can still render when the API is waking up or temporarily offline.
+      const response = await api.get<AuthMe>("/auth/me/", { timeout: 7000 });
       const payload = response.data;
       setMe(payload);
       if (!activeOrgSlug && payload.organizations.length > 0) {
